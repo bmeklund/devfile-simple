@@ -20,6 +20,22 @@ components:
       endpoints:
         - name: http-python
           targetPort: 8000
+  name: tools
+    container:
+      image: quay.io/devfile/universal-developer-image:ubi8-0e189d9
+      endpoints:
+        - exposure: public
+          name: django
+          targetPort: 7000
+          path: /api
+      volumeMounts:
+        - name: venv
+          path: /home/user/.venv
+      memoryLimit: 512Mi
+      mountSources: true
+  - name: venv
+    volume:
+      size: 1G
 commands:
   - id: pip-install-requirements
     exec:
